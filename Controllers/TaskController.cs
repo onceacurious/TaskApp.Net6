@@ -15,8 +15,6 @@ public class TaskController:ControllerBase
         _taskService = taskService;
     }
 
-    [HttpGet]
-    public IActionResult GetAll() => Ok(_taskService.GetAll());
 
     [HttpPost]
     public IActionResult Create([FromBody] TaskItem task) => Ok(_taskService.Create(task));

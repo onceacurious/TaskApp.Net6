@@ -9,19 +9,15 @@ public class TaskService:ITaskService
     private readonly IMemoryCache _memoryCache;
     private const string CacheKey = "Tasks";
 
+    private readonly MemoryCacheEntryOptions _cacheOptions = new()
+    {
+        AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(10), // auto-expire after 10 min
+        SlidingExpiration = TimeSpan.FromMinutes(5) // reset the timer if accessed again within 5 min
+    };
+
     public TaskService(IMemoryCache memoryCache)
     {
         _memoryCache = memoryCache;
-    }
-
-    public List<TaskItem>? GetAll()
-    {
-        if (!_memoryCache.TryGetValue(CacheKey, out List<TaskItem>? tasks))
-        {
-            tasks = new List<TaskItem>();
-            _memoryCache.Set(CacheKey, tasks);
-        }
-        return tasks;
     }
 
     public TaskItem Create(TaskItem task)
@@ -29,12 +25,14 @@ public class TaskService:ITaskService
         if (!_memoryCache.TryGetValue(CacheKey, out List<TaskItem>? tasks))
         {
             tasks = new List<TaskItem>();
-            _memoryCache.Set(CacheKey, tasks);
         }
 
         task.Id = Guid.NewGuid();
         tasks?.Add(task);
-        _memoryCache.Set(CacheKey, task);
+
+        // Store in cache
+        _memoryCache.Set(CacheKey, tasks, _cacheOptions);
+
         return task;
     }
 
