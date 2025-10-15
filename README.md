@@ -1,25 +1,69 @@
-﻿#  Practical Test
+﻿# Practical Test
 
-Objective: Implement a simple feature that integrates both frontend and backend.
-The candidate should demonstrate the ability to use the full stack with Model-Controller-Service.
+## Objective
+
+Develop a **minimal full-stack feature** that demonstrates backend design principles (Model–Service–Controller architecture) and basic frontend integration.
+The focus is on building a **clean, maintainable backend** with proper layering, dependency injection, and validation, while exposing a RESTful API consumed by a simple React client.
+
+---
 
 ## Backend: .NET 6
-**Requirements:**
-1. Implement a RESTful API endpoint to manage tasks (Task: ID, Title, IsCompleted):
-    - GET /api/tasks
-    - POST /api/tasks
-    - PUT /api/tasks/{id}
-    - DELETE /api/tasks/{id}
-    - GET /api/tasks/{id}
-2. Store tasks in in-memory using a Scoped service.
-3. Add basic validation (e.g. title cannot be empty).
+
+### Backend Requirements
+
+1. **Implement a Task Management API** using the following endpoints:
+
+   * `GET /api/tasks` – Retrieve all tasks
+   * `GET /api/tasks/{id}` – Retrieve a specific task by ID
+   * `POST /api/tasks` – Create a new task
+   * `PUT /api/tasks/{id}` – Update an existing task
+   * `DELETE /api/tasks/{id}` – Remove a task
+
+2. **Model Definition**
+
+   ```csharp
+   public class TaskItem
+   {
+       public Guid Id { get; set; }
+       public string Title { get; set; }
+       public bool IsCompleted { get; set; }
+   }
+   ```
+
+3. **Architecture**
+
+   * Follow the **Model–Service–Controller (MSC)** pattern:
+
+     * **Model**: Represents the task entity.
+     * **Service**: Manages in-memory storage and encapsulates business logic.
+     * **Controller**: Handles HTTP requests and responses.
+   * Use **dependency injection** with a *Scoped* service for in-memory data handling.
+
+4. **Validation**
+
+   * Ensure `Title` is required and non-empty.
+   * Return appropriate HTTP status codes (e.g., 400 for validation errors, 404 for missing tasks, 200/201 for success).
+
+5. **Bonus (optional)**
+
+   * Add filtering (e.g., `GET /api/tasks?isCompleted=true`).
+   * Implement basic logging and error handling middleware.
+
+---
 
 ## Frontend: React 18
-**Requirements:**
-1. Create a TaskList component that displays the list of tasks.
-    - Fetch the tasks from the RESTful API endpoint.
-    - Display a task with a checkbox and a title.
-2. **Bonus**:
-    - Add a button to add a new task.
-    - Add a button to delete a task.
-    - Allow a user to mark a task as completed.
+
+### Frontend Requirements
+
+1. **TaskList Component**
+
+   * Fetch and display tasks from the backend API.
+   * Display each task with a checkbox (for completion) and a title.
+
+2. **Bonus Features**
+
+   * Add a form/button to create new tasks.
+   * Add a delete button to remove a task.
+   * Allow toggling of the completion status directly from the UI.
+
+---
