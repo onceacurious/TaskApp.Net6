@@ -5,6 +5,8 @@
 Develop a **minimal full-stack feature** that demonstrates backend design principles (Model–Service–Controller architecture) and basic frontend integration.
 The focus is on building a **clean, maintainable backend** with proper layering, dependency injection, and validation, while exposing a RESTful API consumed by a simple React client.
 
+> **Note:** The project already has a boilerplate setup with React and .NET 6. You can use it as a starting point.
+
 ---
 
 ## Backend: .NET 6
