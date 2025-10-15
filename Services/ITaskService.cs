@@ -1,6 +1,9 @@
-﻿namespace TaskApp.Net6.Services;
+﻿using TaskApp.Net6.Models;
 
-public class ITaskService
+namespace TaskApp.Net6.Services;
+
+public interface ITaskService
 {
-    
+    List<TaskItem>? GetAll();
+    TaskItem Create(TaskItem task);
 }
